@@ -55,7 +55,10 @@ function copyDetail() {
     alert('复制成功')
 }
 function transTime(date) {
-    const d = new Date(date);
+    if (!date && date !== 0) return '';
+    // 兼容 ISO 日期字符串 和 数字时间戳字符串（如 "1782298475324"）
+    const d = new Date(isNaN(date) ? date : Number(date));
+    if (isNaN(d.getTime())) return '';
     const y = d.getFullYear(),
         mon = toTwo(d.getMonth() + 1),
         D = toTwo(d.getDate()),
@@ -91,12 +94,12 @@ function transTime(date) {
                 <div class="country">{{ countryMap[routeMess[0].origin] }}-> {{ countryMap[routeMess[0].destination] }}
                 </div>
 
-                <div class="mess">{{ routeMess[0].lastState.txt }} {{ transTime(routeMess[0].lastState.updateTime) }}
+                <div class="mess">{{ routeMess[0].lastState?.txt || '' }} {{ transTime(routeMess[0].lastState?.updateTime) }}
                 </div>
             </div>
 
             <div class="details">
-                <div class="stit">当前状态：{{ routeMess[0].lastState.txt }} {{ transTime(routeMess[0].lastState.updateTime)
+                <div class="stit">当前状态：{{ routeMess[0].lastState?.txt || '' }} {{ transTime(routeMess[0].lastState?.updateTime)
                     }}</div>
                 <h3>历史轨迹：</h3>
                 <ul>

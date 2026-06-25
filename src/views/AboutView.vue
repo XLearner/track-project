@@ -30,7 +30,7 @@
           <div class="stit">{{ item.tit }}</div>
           <div class="txt">
             <div class="price">{{ (item.price * realWeight || 0).toFixed(2) }} RMB</div>
-            <div class="w">{{ (realWeight || 0).toFixed(3) }} * {{ item.price }}</div>
+            <div class="w">{{ (realWeight || 0).toFixed(3) }}KG * {{ item.price.toFixed(2) }}</div>
           </div>
         </li>
       </ul>
@@ -47,15 +47,41 @@ import JsonDialog from './json.vue';
 const data = ref([
   {
     tit: '香港DHL-M价-不带电',
-    total: 839,
     price: 93.45,
     oil: 34,
     adCharge: 34,
     freight: 200,
   },
   {
-    tit: '香港DHL-M价-不带电',
-    total: 900,
+    tit: '香港DHL-P价-不带电',
+    price: 93.45,
+    oil: 34,
+    adCharge: 34,
+    freight: 200,
+  },
+  {
+    tit: '深圳UPS红单W价5500',
+    price: 93.45,
+    oil: 34,
+    adCharge: 34,
+    freight: 200,
+  },
+  {
+    tit: '大陆UPS红单5800促销-免偏远/住宅/AHC',
+    price: 93.45,
+    oil: 34,
+    adCharge: 34,
+    freight: 200,
+  },
+  {
+    tit: '广州UPS蓝单A价5000-免偏远住宅',
+    price: 93.45,
+    oil: 34,
+    adCharge: 34,
+    freight: 200,
+  },
+  {
+    tit: '大陆UPS蓝单D价5000-免偏远/住宅/AHC',
     price: 93.45,
     oil: 34,
     adCharge: 34,
@@ -131,7 +157,8 @@ input.weigth {
 }
 
 .list .stit {
-  height: 20px;
+  line-height: 1.2;
+  max-width: 70%;
 }
 
 .tit {
