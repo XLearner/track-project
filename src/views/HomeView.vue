@@ -18,23 +18,36 @@ onMounted(() => {
 
 function getTrack(id) {
   apiGetTrack(id).then(res => {
-    if (res.code == 0) {
+    if (res.code == 0 && res.data) {
       cargo.value = res.data.map(ele => {
-        const temp = JSON.parse(ele.history);
-        const history = temp.sort((a, b) => new Date(a.updateTime).getTime() - new Date(b.updateTime).getTime()).map(ele => ({
-          ...ele,
-          on: true
-        }))
-        history[history.length - 1].on = false;
+        let history = [];
+        try {
+          // 兼容 history 为 JSON 字符串或已解析的数组
+          const raw = typeof ele.history === 'string' ? JSON.parse(ele.history) : (ele.history || []);
+          history = raw
+            .sort((a, b) => {
+              // 兼容 ISO 日期字符串和数字时间戳字符串
+              const parseTime = (v) => isNaN(v) ? new Date(v).getTime() : new Date(Number(v)).getTime();
+              return parseTime(a.updateTime) - parseTime(b.updateTime);
+            })
+            .map(ele => ({ ...ele, on: true }));
+          if (history.length > 0) {
+            history[history.length - 1].on = false;
+          }
+        } catch (e) {
+          history = [];
+        }
 
         return {
           ...ele,
           history: history,
           historyLen: history.length,
-          lastState: history[history.length - 1]
+          lastState: history.length > 0 ? history[history.length - 1] : null
         }
       })
     }
+  }).catch(err => {
+    console.error('获取轨迹信息失败:', err);
   })
 }
 </script>

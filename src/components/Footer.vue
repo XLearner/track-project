@@ -9,16 +9,16 @@ const baseInfo = useBaseInfoStore()
 const szAddr = computed(() => {
     if (!baseInfo.baseInfo.address) {
         return ''
-      }
-      const arr = baseInfo.baseInfo.address.split('/');
-      return arr.find(e => e.indexOf('深圳') >= 0)
+    }
+    const arr = baseInfo.baseInfo.address.split('/');
+    return arr.find(e => e.indexOf('深圳') >= 0)
 })
 const gzAddr = computed(() => {
     if (!baseInfo.baseInfo.address) {
         return ''
-      }
-      const arr = baseInfo.baseInfo.address.split('/');
-      return arr.find(e => e.indexOf('贵州') >= 0)
+    }
+    const arr = baseInfo.baseInfo.address.split('/');
+    return arr.find(e => e.indexOf('贵州') >= 0)
 })
 
 
@@ -40,10 +40,10 @@ const gzAddr = computed(() => {
 
                     <div class="message">
                         <p class="address_tel_fax">
-                          <span>深圳公司地址：{{ szAddr }}</span>
+                            <span>深圳公司地址：{{ szAddr }}</span>
                         </p>
                         <p>贵州公司地址：{{ gzAddr }}</p>
-                        <p>电话：{{ baseInfo.baseInfo.tel }}</p>
+                        <!-- <p>电话：{{ baseInfo.baseInfo.tel }}</p> -->
                         <p class="email_wx">
                             <span>邮箱：{{ baseInfo.baseInfo.email }}</span>
                         </p>
@@ -145,6 +145,7 @@ const gzAddr = computed(() => {
     .content {
         flex-direction: column;
     }
+
     .right-box {
         padding: 0;
         font-size: 12px;
